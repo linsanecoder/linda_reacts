@@ -2,40 +2,37 @@
 // for more information see the following page on the TypeScript wiki:
 // https://github.com/Microsoft/TypeScript/wiki/JSX
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 export class List extends React.Component {
    constructor(state) {
       super(state);
       this.state = { items: null };
-      this.loadMenusFromServer();
+      //this.loadMenusFromServer();
    }
 
    loadMenusFromServer() {
-      var xhr = new XMLHttpRequest();
-      xhr.open('get', 'http://localhost:58109/data/GetMenuList/', true);
-      xhr.onload = function () {
-         var dataitems = JSON.parse(xhr.responseText);
-         //var tmp = this.state;
-         //tmp.items = dataitems;
-         //this.setState(tmp);
-         document.getElementById('rawdata').innerHTML = xhr.responseText + "dsklfjasdklfj";
-      };
-      xhr.send();
+      document.getElementById('rawdata').innerHTML = "";
+
+      fetch('https://localhost:44320/data')
+      //fetch('https://localhost:44320/data', {
+      //   mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'} })
+         .then((response) => {
+            return response.json();
+         })
+         .then((myJson) => {
+            var data = myJson;
+            var mainContainer = document.getElementById("rawdata");
+
+            for (var i = 0; i < data.length; i++) {
+               var div = document.createElement("div");
+               div.innerHTML = 'Date: ' + data[i].Date + '  Temp: ' + data[i].TemperatureC + '  Summary: ' + data[i].Summary + '  <br />';
+
+               mainContainer.appendChild(div);
+            }
+         });
    }
 
    render() {
-      //let menus = this.state.items || [];
-      //var menuList = menus.map(function (menu) {
-      //   return (
-      //      <div key={menu.Id}>
-      //         <b>{menu.Name} </b>    <br />
-      //         <img style={{ width: '100px', float: 'left', margin: '5px' }} src={"/img/" + menu.Picture} />{menu.Description}<p />
-      //         <div>${menu.Price} | <a href='#' onClick={this.addToCart.bind(this, menu.Id)} >Add to cart</a></div><hr />
-      //      </div>
-      //   )
-      //}, this);
-
       return (
          <div id="dvmenu">
             menuList<br/>
