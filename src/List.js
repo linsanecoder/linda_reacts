@@ -8,16 +8,15 @@ export class List extends React.Component {
    constructor(state) {
       super(state);
       this.state = { items: [] };
-      //this.loadMenusFromServer();
    }
 
-   loadMenusFromServer() {
-      fetch('https://localhost:44320/data')
+   loadWeatherFromServer() {
+      fetch('https://localhost:44320/data/weather')
          .then((response) => {
             return response.json();
          })
          .then((myJson) => {
-            var mainContainer = document.getElementById("rawdata");
+            var mainContainer = document.getElementById("weather");
             let rawdata = myJson || [];
 
             var result = rawdata.map(function (data) {
@@ -33,10 +32,41 @@ export class List extends React.Component {
          });
    }
 
+   loadMenuFromServer() {
+      fetch('https://localhost:44320/data/menu')
+         .then((response) => {
+            return response.json();
+         })
+         .then((myJson) => {
+            var mainContainer = document.getElementById("menu");
+            let rawdata = myJson || [];
+
+            var result = rawdata.map(function (menu) {
+               return (
+                  //<div>Name: {data.Name}  Description: {data.Description}  Price: ${parseFloat(data.Price).toFixed(2).toString()}</div>
+                  <div key={menu.Id}>
+                     <b>{menu.Name} </b>    <br />
+                     <img style={{ width: '100px', float: 'left', margin: '5px' }} src={"/img/" + menu.Picture} />{menu.Description}<p />
+                     <div>${menu.Price}</div><hr />
+                  </div>
+               )
+
+            }, this);
+
+            ReactDOM.render(
+               <div id="dvmenu">
+                  {result}
+               </div>,
+               mainContainer
+            );
+         });
+   }
+
    render() {
       return (
          <div id="dvmenu">
-            <button name="Load" onClick={this.loadMenusFromServer}>Load List</button>
+            <button name="LoadW" onClick={this.loadWeatherFromServer}>Load Weather</button>
+            <button name="LoadM" onClick={this.loadMenuFromServer}>Load Menu</button>
          </div>);
    }
 

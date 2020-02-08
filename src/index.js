@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './food.css';
 import App from './App';
 import List from './List';
 import Numbers from './Numbers';
