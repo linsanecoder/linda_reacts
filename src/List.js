@@ -43,7 +43,6 @@ export class List extends React.Component {
 
             var result = rawdata.map(function (menu) {
                return (
-                  //<div>Name: {data.Name}  Description: {data.Description}  Price: ${parseFloat(data.Price).toFixed(2).toString()}</div>
                   <div key={menu.Id}>
                      <b>{menu.Name} </b>    <br />
                      <img style={{ width: '100px', float: 'left', margin: '5px' }} src={"/img/" + menu.Picture} />{menu.Description}<p />
