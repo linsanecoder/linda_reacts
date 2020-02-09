@@ -11,7 +11,7 @@ export class List extends React.Component {
    }
 
    loadWeatherFromServer() {
-      fetch('https://localhost:44320/data/weather')
+      fetch('https://localhost:44320/weather')
          .then((response) => {
             return response.json();
          })
@@ -33,7 +33,7 @@ export class List extends React.Component {
    }
 
    loadMenuFromServer() {
-      fetch('https://localhost:44320/data/menu')
+      fetch('https://localhost:44320/menu')
          .then((response) => {
             return response.json();
          })
